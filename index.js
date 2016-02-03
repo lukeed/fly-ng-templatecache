@@ -80,7 +80,7 @@ function moduleWrapper (data, opts) {
   const module = modules[system]
 
   if (!system || !module) {
-    return data;
+    return data
   }
 
   return (module.header || '') + data + (module.footer || '')
