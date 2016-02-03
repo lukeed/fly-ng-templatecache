@@ -4,7 +4,7 @@
   </a>
 </div>
 
-> Concatenate and reigster Angular JS templates in the [$templateCache](https://docs.angularjs.org/api/ng/service/$templateCache), with _[Fly][fly]_.
+> Concatenate and register Angular JS templates in the [$templateCache](https://docs.angularjs.org/api/ng/service/$templateCache), with _[Fly][fly]_.
 
 [![][fly-badge]][fly]
 [![npm package][npm-ver-link]][releases]
