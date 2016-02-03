@@ -22,8 +22,7 @@ const modules = {
 
 const defaults = {
   standalone: false,
-  fileBase: '',
-  fileName: 'templates.js',
+  filename: 'templates.js',
   moduleName: 'templates',
   moduleSystem: null,
   templateHeader: 'angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {',
@@ -42,7 +41,7 @@ module.exports = function () {
       data = angularWrapper(data, opts)
       data = moduleWrapper(data, opts)
 
-      this.concat(opts.fileName)
+      this.concat(opts.filename)
 
       return data
     })
