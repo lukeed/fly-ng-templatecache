@@ -109,7 +109,7 @@ The template wrapper for each view's content. It is not recommended to change th
 
 This is appended to your module file. There probably is no reason to change this.
 
-#### templateUrl
+#### transformUrl
 
 > Type: `function`
 
@@ -131,13 +131,13 @@ All template files will be retain their full path, so you must use the full path
 <div ng-include="'app/scripts/templates/app.html'"></div>
 ```
 
-To change this, pass in a custom `templateUrl` function:
+To change this, pass in a custom `transformUrl` function:
 
 ```js
 yield this
   .source('app/scripts/templates/*.html')
   .ngTemplates({
-    templateUrl: (url) => {
+    transformUrl: (url) => {
       return url.replace('app/scripts/templates/', '') // remove that path
     }
   }

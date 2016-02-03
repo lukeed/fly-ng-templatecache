@@ -28,7 +28,7 @@ const defaults = {
   templateHeader: 'angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {',
   templateContent: '$templateCache.put("<%= url %>","<%= contents %>");',
   templateFooter: '}]);',
-  templateUrl: (url) => url
+  transformUrl: (url) => url
 }
 
 module.exports = function () {
@@ -52,7 +52,7 @@ module.exports = function () {
  * Wrap each file's contents in a $templateCache definition
  */
 function buildContent (file, opts) {
-  const url = opts.templateUrl( path.normalize(file) )
+  const url = opts.transformUrl( path.normalize(file) )
   const contents = fs.readFileSync(file, 'utf8')
 
   const data = opts.templateContent.replace(/<%= url %>/g, url)
