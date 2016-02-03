@@ -4,7 +4,7 @@
   </a>
 </div>
 
-> [Templatecache](https://github.com/lukeed/fly-ng-templatecache) plugin for _[Fly][fly]_.
+> Concatenate and reigster Angular JS templates in the [$templateCache](https://docs.angularjs.org/api/ng/service/$templateCache), with _[Fly][fly]_.
 
 [![][fly-badge]][fly]
 [![npm package][npm-ver-link]][releases]
@@ -12,20 +12,24 @@
 [![][travis-badge]][travis-link]
 [![][mit-badge]][mit]
 
-## Usage
-> Check out the [documentation](PLUGIN_DOCUMENTATION) to see the available options.
-
-### Install
+## Install
 
 ```a
 npm install -D fly-ng-templatecache
 ```
 
-### Example
+## Example
 
 ```js
 export default function* () {
-  yield ...
+  yield this.source('templates/**/*.html')
+    .ngTemplates({
+      standalone: true,
+      fileName: 'app-views.html',
+      moduleName: 'app.templates',
+      // ...
+    })
+    .target('dist/js');
 }
 ```
 
