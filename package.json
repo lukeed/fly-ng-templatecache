@@ -11,6 +11,11 @@
   "keywords": [
     "fly",
     "fly-plugin",
+    "templatecache",
+    "angular",
+    "angularjs",
+    "ng",
+    "html2js",
     "templatecache"
   ],
   "scripts": {
