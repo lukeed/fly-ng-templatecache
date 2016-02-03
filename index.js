@@ -1,34 +1,40 @@
-export default function (/*debug*/) {
-  this.filter("templatecache", (data, options) => {
-  /**
-    @overview A filter plugin returns an object { code, map, ext }
-    which is the result of transforming the incomding data source:
+const assign = require('object-assign')
+const strEsc = require('js-string-escape')
 
-      return { code, map, ext }
+const HEADER  = 'angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {'
+const CONTENT = '$templateCache.put("<%= url %>","<%= contents %>");'
+const FOOTER  = '}]);'
 
-    @example Sync filter `j` that transforms a given string into an
-    object, i.e, {code, map} where code is the result data and map
-    a sourcemap if `options.sourceMap === true`.
+const modules = {
+  requirejs: {
+    header: 'define([\'angular\'], function(angular) { \'use strict\'; return ',
+    footer: '});'
+  },
+  browserify: {
+    header: '\'use strict\'; module.exports = '
+  },
+  es6: {
+    header: 'import angular from \'angular\'; export default ',
+  },
+  iife: {
+    header: '(function(){',
+    footer: '})();'
+  }
+}
 
-      const j = require("my-js-transformer")
-      const assign = require("object-assign")
+const defaults = {
+  standalone: false,
+  filename: 'templates.js',
+  moduleName: 'templates',
+  moduleSystem: null,
+  templateHeader: HEADER,
+  templateContent: CONTENT,
+  templateFooter: FOOTER,
+  templateUrl: () => false
+}
 
-      export default function () {
-        return this.filter("j", (data, options) => {
-          return assign({ ext: ".js"}, j.render(data.toString(), options))
-        })
-      }
-
-    @example Async filter `s` that transforms a given string and invokes
-    a callback function with an object, i.e, {css, map}.
-
-    const s = require("my-style-trasformer")
-    const assign = require("object-assign")
-
-    export default function () {
-      return this.defer(s.render)(data.toString(), options).then((result) =>
-        assign({ ext: ".css"}, result))
-    }
-  */
-  })
+module.exports = function () {
+  this.ngTemplates = (options) => {
+    options = assign(defaults, options)
+  }
 }
