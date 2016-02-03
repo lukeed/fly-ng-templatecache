@@ -8,7 +8,7 @@
   "files": [
     "index.js"
   ],
-  "keywords":[
+  "keywords": [
     "fly",
     "fly-plugin",
     "templatecache"
@@ -28,6 +28,8 @@
     "url": "https://lukeed.com"
   },
   "dependencies": {
+    "js-string-escape": "^1.0.0",
+    "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^1.10.0",
