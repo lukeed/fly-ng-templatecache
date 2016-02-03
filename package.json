@@ -1,6 +1,6 @@
 {
   "name": "fly-ng-templatecache",
-  "version": "0.0.0",
+  "version": "0.9.0",
   "description": "Concatenate and reigster Angular JS templates in the $templateCache.",
   "license": "MIT",
   "repository": "https://github.com/lukeed/fly-ng-templatecache",
