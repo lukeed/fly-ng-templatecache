@@ -25,7 +25,7 @@ export default function* () {
   yield this.source('templates/**/*.html')
     .ngTemplates({
       standalone: true,
-      fileName: 'app-views.html',
+      filename: 'app-views.html',
       moduleName: 'app.templates',
       // ...
     })
