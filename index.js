@@ -21,10 +21,10 @@ const modules = {
 }
 
 const defaults = {
-  standalone: false,
-  filename: 'templates.js',
+  file: 'templates.js',
   moduleName: 'templates',
   moduleSystem: null,
+  standalone: false,
   templateHeader: 'angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {',
   templateContent: '$templateCache.put("<%= url %>","<%= contents %>");',
   templateFooter: '}]);',
@@ -32,8 +32,8 @@ const defaults = {
 }
 
 module.exports = function () {
-  this.filter('ngTemplates', (data, options) => {
-    const opts = assign(defaults, options)
+  this.filter('ngTemplates', (data, opts) => {
+    opts = assign(defaults, opts)
 
     return this.unwrap(files =>
       files.map(file => buildContent(file, opts)).join('')
@@ -41,7 +41,7 @@ module.exports = function () {
       data = angularWrapper(data, opts)
       data = moduleWrapper(data, opts)
 
-      this.concat(opts.filename)
+      this.concat(opts.file)
 
       return data
     })

@@ -25,7 +25,7 @@ export default function* () {
   yield this.source('templates/**/*.html')
     .ngTemplates({
       standalone: true,
-      filename: 'app-views.html',
+      file: 'app-views.html',
       moduleName: 'app.templates',
       // ...
     })
@@ -43,7 +43,7 @@ export default function* () {
 
 If `true`, creates a new Angular JS module. If `false`, it is assumed that you are using an existing module.
 
-#### filename
+#### file
 
 > Type: `string`
 
