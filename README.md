@@ -35,19 +35,11 @@ export default function* () {
 
 ## API
 
-#### standalone
-
-> Type: `boolean`
-
-**Default:** `false`
-
-If `true`, creates a new Angular JS module. If `false`, it is assumed that you are using an existing module.
-
 #### file
 
 > Type: `string`
 
-**Default:** `templates.js`
+> Default: `templates.js`
 
 The name of the file that will be place in your `target()` destination. Do not include a directory structure here.
 
@@ -55,7 +47,7 @@ The name of the file that will be place in your `target()` destination. Do not i
 
 > Type: `string`
 
-**Default:** `templates`
+> Default: `templates`
 
 The name of your Angular JS module or submodule.
 
@@ -69,7 +61,7 @@ The name of your Angular JS module or submodule.
 
 > Type: `string`
 
-**Default:** `null`
+> Default: `null`
 
 The module system that your templates-module should be prepared for. Currently supports:
 * `iffe` -- (immediately-invoked function expression)
@@ -83,11 +75,19 @@ The module system that your templates-module should be prepared for. Currently s
 })
 ```
 
+#### standalone
+
+> Type: `boolean`
+
+> Default: `false`
+
+If `true`, creates a new Angular JS module. If `false`, it is assumed that you are using an existing module.
+
 #### templateHeader
 
 > Type: `string`
 
-**Default:** `angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {`
+> Default: `angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {`
 
 This precedes your template content and will correctly initialize your Angular module. It is not recommended you change this, but if you do, you retain the `<%= module %>` variable.
 
@@ -97,7 +97,7 @@ If the `standalone` option is `true`, an empty dependency array (`[]`) will repl
 
 > Type: `string`
 
-**Default:** `$templateCache.put("<%= url %>","<%= contents %>");`
+> Default: `$templateCache.put("<%= url %>","<%= contents %>");`
 
 The template wrapper for each view's content. It is not recommended to change this.
 
@@ -105,7 +105,7 @@ The template wrapper for each view's content. It is not recommended to change th
 
 > Type: `string`
 
-**Default:** `}]);`
+> Default: `}]);`
 
 This is appended to your module file. There probably is no reason to change this.
 
@@ -113,7 +113,7 @@ This is appended to your module file. There probably is no reason to change this
 
 > Type: `function`
 
-**Default:** `(url) => url`
+> Default: `(url) => url`
 
 The function that handles or alters your views' reference URLs.
 
