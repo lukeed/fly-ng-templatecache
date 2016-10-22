@@ -40,21 +40,25 @@ module.exports = function () {
 			opts.trim = str => str.replace(new RegExp(t, 'i'), '/');
 		}
 
-		let data = files.map(file => {
+		let data = [];
+		for (const file of files) {
+			if (!file.data) continue;
 			// strip a string from the `file.dir` path
 			let dir = p.relative(this.root, file.dir);
 			// apply `opts.trim` func
 			dir = p.normalize(opts.trim(dir));
 			// esure no leading '/'
-			dir = dir.chartAt(0) === '/' ? dir.substr(1) : dir;
+			dir = dir.charAt(0) === '/' ? dir.substr(1) : dir;
 			// wrap & return each file's content in a $templateCache definition
-			return opts.templateContent
-				.replace('<%= url %>', dir)
-				.replace('<%= contents %>', strEsc(file.data.toString()));
-		}).join('');
+			data.push(
+				opts.templateContent
+					.replace('<%= url %>', p.join(dir, file.base))
+					.replace('<%= contents %>', strEsc(file.data.toString()))
+			);
+		}
 
 		// "merge" all data && wrap with angular
-		data = opts.templateHeader.concat(data, opts.templateFooter)
+		data = opts.templateHeader.concat(data.join(''), opts.templateFooter)
 			.replace('<%= module %>', opts.moduleName)
 			.replace('<%= standalone %>', (opts.standalone ? ', []' : ''));
 
