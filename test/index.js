@@ -16,7 +16,7 @@ test('fly-ng-templatecache', t => {
 		}],
 		tasks: {
 			a: function * () {
-				const read = () => this.$.read(`${tmp}/templates.js`);
+				const read = () => this.$.read(`${tmp}/templates.js`, 'utf8');
 				t.ok('ngTemplates' in fly, 'attach `ngTemplates()` to fly');
 
 				yield this.source(`${dir}/*.html`).ngTemplates().target(tmp);
