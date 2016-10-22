@@ -1,33 +1,22 @@
-<div align="center">
-  <a href="http://github.com/flyjs/fly">
-    <img width=200px  src="https://cloud.githubusercontent.com/assets/8317250/8733685/0be81080-2c40-11e5-98d2-c634f076ccd7.png">
-  </a>
-</div>
+# fly-ng-templatecache [![][travis-badge]][travis-link]
 
 > Concatenate and register Angular JS templates in the [$templateCache](https://docs.angularjs.org/api/ng/service/$templateCache), with _[Fly][fly]_.
 
-[![][fly-badge]][fly]
-[![npm package][npm-ver-link]][releases]
-[![][dl-badge]][npm-pkg-link]
-[![][travis-badge]][travis-link]
-[![][mit-badge]][mit]
-
 ## Install
 
-```a
-npm install -D fly-ng-templatecache
+```
+npm install --save-dev fly-ng-templatecache
 ```
 
-## Example
+## Usage
 
 ```js
-export default function* () {
+exports.default = function * () {
   yield this.source('templates/**/*.html')
     .ngTemplates({
+      file: 'views.js',
       standalone: true,
-      file: 'app-views.html',
-      moduleName: 'app.templates',
-      // ...
+      moduleName: 'app.templates'
     })
     .target('dist/js');
 }
@@ -35,136 +24,79 @@ export default function* () {
 
 ## API
 
-#### file
+### .ngTemplates(options)
 
-> Type: `string`
+#### options.file
 
-> Default: `templates.js`
+Type: `string` <br>
+Default: `templates.js`
 
 The name of the file that will be place in your `target()` destination. Do not include a directory structure here.
 
-#### moduleName
+#### options.moduleName
 
-> Type: `string`
-
-> Default: `templates`
+Type: `string` <br>
+Default: `'templates'`
 
 The name of your Angular JS module or submodule.
 
-```js
-.ngTemplates({
-  moduleName: 'app.templates'
-})
-```
+#### options.moduleType
 
-#### moduleSystem
+Type: `string` <br>
+Default: `null` <br>
+Options: `'iffe'`, `'requirejs'`, `'browserify'`, `'es6'`
 
-> Type: `string`
+The module system for which your module should be prepared.
 
-> Default: `null`
+#### options.standalone
 
-The module system that your templates-module should be prepared for. Currently supports:
-* `iffe` -- (immediately-invoked function expression)
-* `requirejs` -- [Require JS](http://requirejs.org/docs/api.html#define)
-* `browserify` -- [Browserify](https://github.com/substack/node-browserify#browserify)
-* `es6` -- ES6 / ES2015 module `import`/`export`
-
-```js
-.ngTemplates({
-  moduleSystem: 'browserify'
-})
-```
-
-#### standalone
-
-> Type: `boolean`
-
-> Default: `false`
+Type: `boolean` <br>
+Default: `false`
 
 If `true`, creates a new Angular JS module. If `false`, it is assumed that you are using an existing module.
 
-#### templateHeader
+#### options.templateHeader
 
-> Type: `string`
+Type: `string` <br>
+Default: `angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {`
 
-> Default: `angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {`
-
-This precedes your template content and will correctly initialize your Angular module. It is not recommended you change this, but if you do, you retain the `<%= module %>` variable.
+This precedes your template content and will correctly initialize your Angular module. It is not recommended you change this, but if you do, you _must_ retain the `<%= module %>` variable.
 
 If the `standalone` option is `true`, an empty dependency array (`[]`) will replace `<%= standalone %>`. 
 
-#### templateContent
+#### options.templateContent
 
-> Type: `string`
-
-> Default: `$templateCache.put("<%= url %>","<%= contents %>");`
+Type: `string` <br>
+Default: `$templateCache.put("<%= url %>","<%= contents %>");`
 
 The template wrapper for each view's content. It is not recommended to change this.
 
-#### templateFooter
+#### options.templateFooter
 
-> Type: `string`
-
-> Default: `}]);`
+Type: `string` <br>
+Default: `}]);`
 
 This is appended to your module file. There probably is no reason to change this.
 
-#### transformUrl
+#### options.trim
 
-> Type: `function`
+Type: `function` or `string` <br>
+Default: `''`
 
-> Default: `(url) => url`
-
-The function that handles or alters your views' reference URLs.
-
-By default:
-```js
-yield this
-  .source('app/scripts/templates/*.html')
-  .ngTemplates(/* defaults */)
-  .target('dist/js')
-```
-
-All template files will be retain their full path, so you must use the full path.
-
-```html
-<div ng-include="'app/scripts/templates/app.html'"></div>
-```
-
-To change this, pass in a custom `transformUrl` function:
+A function that handles or alters your views' reference URLs. If using `string`, the value will simply be removed.
 
 ```js
-yield this
-  .source('app/scripts/templates/*.html')
-  .ngTemplates({
-    transformUrl: (url) => {
-      return url.replace('app/scripts/templates/', '') // remove that path
-    }
-  }
-  })
-  .target('dist/js')
-```
-
-With `app/scripts/templates/` removed, the reference ID is now just `app.html`.
-
-```html
-<div ng-include="'app.html'"></div>
+.ngTemplates({
+  trim: str => str.replace('app/views', 'views');
+})
+//=> ng-include="views/demo.html"
+//=> INSTEAD OF
+//=> ng-include="app/views/demo.html"
 ```
 
 ## License
 
-[MIT][mit] © [Luke Edwards][author] et [al][contributors]
+MIT © [Luke Edwards](https://lukeed.com)
 
-
-[mit]:          http://opensource.org/licenses/MIT
-[author]:       https://lukeed.com
-[contributors]: https://github.com/lukeed/fly-ng-templatecache/graphs/contributors
-[releases]:     https://github.com/lukeed/fly-ng-templatecache/releases
-[fly]:          https://www.github.com/flyjs/fly
-[fly-badge]:    https://img.shields.io/badge/fly-JS-05B3E1.svg?style=flat-square
-[mit-badge]:    https://img.shields.io/badge/license-MIT-444444.svg?style=flat-square
-[npm-pkg-link]: https://www.npmjs.org/package/fly-ng-templatecache
-[npm-ver-link]: https://img.shields.io/npm/v/fly-ng-templatecache.svg?style=flat-square
-[dl-badge]:     http://img.shields.io/npm/dm/fly-ng-templatecache.svg?style=flat-square
 [travis-link]:  https://travis-ci.org/lukeed/fly-ng-templatecache
 [travis-badge]: http://img.shields.io/travis/lukeed/fly-ng-templatecache.svg?style=flat-square
