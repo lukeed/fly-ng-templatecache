@@ -11,8 +11,8 @@ npm install --save-dev fly-ng-templatecache
 ## Usage
 
 ```js
-exports.default = function * () {
-  yield this.source('templates/**/*.html')
+exports.views = function * (fly) {
+  yield fly.source('templates/**/*.html')
     .ngTemplates({
       file: 'views.js',
       standalone: true,
