@@ -34,7 +34,7 @@ const defaults = {
 module.exports = {
 	every: false,
 	name: 'ngTemplates',
-	*func(files, opts) {
+	* func(files, opts) {
 		opts = Object.assign({}, defaults, opts);
 
 		if (typeof opts.trim === 'string') {
