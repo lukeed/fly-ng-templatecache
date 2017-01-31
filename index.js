@@ -31,8 +31,10 @@ const defaults = {
 	trim: ''
 };
 
-module.exports = function () {
-	this.plugin('ngTemplates', {every: 0}, function * (files, opts) {
+module.exports = {
+	every: false,
+	name: 'ngTemplates',
+	*func(files, opts) {
 		opts = Object.assign({}, defaults, opts);
 
 		if (typeof opts.trim === 'string') {
@@ -74,5 +76,5 @@ module.exports = function () {
 		out.data = new Buffer(data);
 		// wipe ALL files in favor of new clone
 		this._.files = [out];
-	});
+	}
 };
